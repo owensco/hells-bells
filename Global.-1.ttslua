@@ -5,8 +5,9 @@ bid = 1
 players = getSeatedPlayers()
 -- total_turns = 63 * players
 -- trump_turns = 7 * players
-deck_GUID = '593449'
+deck_GUID = '0ca408'
 no_trump_rounds = players
+rgb = {r=1, g=0, b=0}
 
 function onPlayerTurnStart(player_color_start, player_color_previous)
 
@@ -17,26 +18,86 @@ function onPlayerTurnEnd(player_color_end, player_color_next)
 end
 
 function onLoad()
-  deck = getObjectFromGUID(deck_GUID)
-  deck.shuffle()
-  deal()
+    deck = getObjectFromGUID(deck_GUID)
+    deck.shuffle()
+    deal()
+    createScoreboard()
 end
 
 function onObjectDrop(dropped_object, player_color)
-  bid = bid + 1
-  print(bid)
+    bid = bid + 1
+    -- print(bid)
 end
 
 function deal()
-  for _,playerColor in ipairs(players) do
-      deck.deal(1, playerColor)
-  end
-  top_card = deck.takeObject({index = 1})
-  top_card.flip()
-  trump = convertCard(top_card.getName())
+    for _,playerColor in ipairs(players) do
+        deck.deal(1, playerColor)
+    end
+    top_card = deck.takeObject({index = 1})
+    top_card.flip()
+    trump = convertCard(top_card.getName())
+    message = trump .. " is trump!"
+    broadcastToAll(message, rgb)
 end
 
 function convertCard(card)
-  local number, suit = string.match(card, '(%d+) (%a+)')
-  print(suit)
+    number, suit = string.match(card, '(%d+) (%a+)')
+    return suit
+end
+
+function createScoreboard()
+    player_row = {
+        {
+            tag="Cell",
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text="Player",
+                    }
+                }
+            }
+        }
+    }
+    for _,player_color in ipairs(getSeatedPlayers()) do
+        print(player_color)
+        player={
+            tag="Cell",
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text=player_color,
+                    }
+                }
+            }
+        }
+        table.insert(player_row, player)
+    end
+    print(player_row)
+
+    table_rows = {
+        {
+            tag="Row",
+            children=player_row,
+        }
+    }
+
+    scoreboard = {
+        {
+            tag="Panel",
+            children={
+                {
+                    tag="VerticalScrollView",
+                    children={
+                        {
+                            tag="TableLayout",
+                            children=table_rows
+                        }
+                    }
+                }
+            }
+        }
+    }
+    UI.setXmlTable(scoreboard)
 end

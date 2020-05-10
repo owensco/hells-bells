@@ -1,1 +1,22 @@
-<!-- Xml UI. See documentation: https://api.tabletopsimulator.com/ui/introUI/ -->
+<!-- <Panel>
+  <VerticalScrollView>
+    <TableLayout rowBackgroundColor="rgba(1,1,1,1)" cellBackgroundColor="rgba(0,0,0,1)">
+        <Row>
+            <Cell><Text>Player</Text></Cell>
+            <Cell columnSpan="3"><Text>Player 1</Text></Cell>
+        </Row>
+        <Row>
+            <Cell><Text>Round</Text></Cell>
+            <Cell><Text>Bid</Text></Cell>
+            <Cell><Text>Got</Text></Cell>
+            <Cell><Text>Total</Text></Cell>
+        </Row>
+        <Row>
+            <Cell><Text>1</Text></Cell>
+            <Cell><Text>1</Text></Cell>
+            <Cell><Text>1</Text></Cell>
+            <Cell><Text>2</Text></Cell>
+        </Row>
+    </TableLayout>
+  </VerticalScrollView>
+</Panel> -->
