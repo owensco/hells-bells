@@ -1,0 +1,42 @@
+Turns.enable = true
+Turns.disable_interactations = true
+bid = 1
+
+players = getSeatedPlayers()
+-- total_turns = 63 * players
+-- trump_turns = 7 * players
+deck_GUID = '593449'
+no_trump_rounds = players
+
+function onPlayerTurnStart(player_color_start, player_color_previous)
+
+end
+
+function onPlayerTurnEnd(player_color_end, player_color_next)
+
+end
+
+function onLoad()
+  deck = getObjectFromGUID(deck_GUID)
+  deck.shuffle()
+  deal()
+end
+
+function onObjectDrop(dropped_object, player_color)
+  bid = bid + 1
+  print(bid)
+end
+
+function deal()
+  for _,playerColor in ipairs(players) do
+      deck.deal(1, playerColor)
+  end
+  top_card = deck.takeObject({index = 1})
+  top_card.flip()
+  trump = convertCard(top_card.getName())
+end
+
+function convertCard(card)
+  local number, suit = string.match(card, '(%d+) (%a+)')
+  print(suit)
+end
