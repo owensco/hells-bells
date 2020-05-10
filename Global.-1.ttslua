@@ -59,27 +59,82 @@ function createScoreboard()
             }
         }
     }
-    for _,player_color in ipairs(getSeatedPlayers()) do
-        print(player_color)
-        player={
+    bgt_row = {
+        {
             tag="Cell",
             children={
                 {
                     tag="Text",
                     attributes={
-                        text=player_color,
+                        text="Round",
+                    }
+                }
+            }
+        }
+    }
+    for _,player_color in ipairs(getSeatedPlayers()) do
+
+        player={
+            tag="Cell",
+            attributes={
+                columnSpan="3",
+            },
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text=Player[player_color].steam_name
+                    }
+                }
+            }
+        }
+        bid={
+            tag="Cell",
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text="Bid",
+                    }
+                }
+            }
+        }
+        got={
+            tag="Cell",
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text="Got",
+                    }
+                }
+            }
+        }
+        total={
+            tag="Cell",
+            children={
+                {
+                    tag="Text",
+                    attributes={
+                        text="Total",
                     }
                 }
             }
         }
         table.insert(player_row, player)
+        table.insert(bgt_row, bid)
+        table.insert(bgt_row, got)
+        table.insert(bgt_row, total)
     end
-    print(player_row)
 
     table_rows = {
         {
             tag="Row",
             children=player_row,
+        },
+        {
+            tag="Row",
+            children=bgt_row,
         }
     }
 
@@ -92,6 +147,10 @@ function createScoreboard()
                     children={
                         {
                             tag="TableLayout",
+                            attributes={
+                                rowBackgroundColor="rgba(1,1,1,1)",
+                                cellBackgroundColor="rgba(0,0,0,1)"
+                            },
                             children=table_rows
                         }
                     }
